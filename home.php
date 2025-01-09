@@ -67,7 +67,7 @@ if (file_exists($filename)) {
                         case 0: echo "<h1 class = \"text-2xl\">❔ $ptext</h1>"; break;
                         case 1: echo "<p class = \"\">ถูกสร้างโดย $ptext | "; break;
                         case 2: echo "$ptext</p>"; break;
-                        case sizeof($lines) - 1: echo "<hr class = \"p-2\">";
+                        case sizeof($lines) - 1: echo "<hr class = \" mt-4 p-2\">";
                     }
                 }
                 echo "</a></div>";
