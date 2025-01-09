@@ -1,5 +1,5 @@
 <?php
-$filename = "posts/".$_GET["id"] . ".txt";
+$filename = "posts/" . $_GET["id"] . ".txt";
 if (file_exists($filename)) {
     $fp = fopen($filename, "r");
     $counter = fgets($fp, 99);
@@ -33,20 +33,32 @@ if (file_exists($filename)) {
 
     <script src="https://cdn.tailwindcss.com"></script>
     <?php
-    $lines = file("posts/".$_GET["id"].".txt");
+    $lines = file("posts/" . $_GET["id"] . ".txt");
 
     echo "<title>$lines[0]</title>";
     ?>
 </head>
 
-<body class = "bg-[rgb(60,57,99)] text-white">
+<body class="bg-[rgb(60,57,99)] text-white">
     <main class="mx-auto p-4 w-[90%]  flex items-center flex-col gap-4">
-        <section class="w-full flex items-center flex-col gap-4 bg-blue-800 p-8 border-slate-400 border-[1px] rounded-sm">
+        <a href="home.php"
+            class="bg-green-600 hover:bg-green-700 rounded px-4 py-2 self-start flex justify-center items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-arrow-left">
+                <path d="m12 19-7-7 7-7" />
+                <path d="M19 12H5" />
+            </svg>
+            กลับ
+        </a>
+        <section
+            class="w-full flex items-center flex-col gap-4 bg-blue-800 p-8 border-slate-400 border-[1px] rounded-sm">
             <?php
-            $lines = file("posts/".$_GET["id"].".txt");
+            $lines = file("posts/" . $_GET["id"] . ".txt");
 
             $creator = $lines[1];
             $createdDT = $lines[2];
+            $content = "";
             echo "<div class = \"w-full flex flex-col p-2 \">";
             for ($j = 0; $j <= sizeof($lines) - 1; $j++) {
                 $ptext = $lines[$j];
@@ -56,13 +68,13 @@ if (file_exists($filename)) {
                         break;
                     case 1:
                     case 2:
-                     break;
-                    default:
-                        echo "<p class = \"\">$ptext</p>";
                         break;
-                    
+                    default:
+                        $content = "$content$ptext";
+                        break;
                 }
             }
+            echo "<pre class=\"text-wrap\">$content</pre>";
             echo "<div class = \"mt-8 flex flex-row gap-4\"><div class = \"text-4xl text-center\">😄</div>";
             echo "<div><p class = \"\">$creator</p>";
             echo "<p class = \"\">$createdDT</p></div>";
