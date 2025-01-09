@@ -32,7 +32,11 @@ if (file_exists($filename)) {
     </style>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>😄 Tanpip home</title>
+    <?php
+    $lines = file("posts/".$_GET["id"].".txt");
+
+    echo "<title>$lines[0]</title>";
+    ?>
 </head>
 
 <body class = "bg-[rgb(60,57,99)] text-white">
