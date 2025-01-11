@@ -63,33 +63,21 @@ if (file_exists($filename)) {
             </a>
             <?php
 
-            // $lines = file($filename);
-            // // file consists of array of lines that have strings
-            // $last = sizeof($lines )-1;
-            // for ($i=$last; $i>=0; $i--)
-            // {
-            //     $ptext = $lines[$i];
-            //     echo $ptext, "<br>";
-            //     if ($i %2 != 1) echo "<hr>";
-            // }
             for ($i = 0; $i < $counter; $i++) {
-                $lines = file("posts/" . $i . ".txt");
-                echo "<div class = \"w-full flex flex-col\"><a class=\"border-2 border-white/40 hover:border-white/80 bg-[rgb(60,57,99)] hover:bg-[rgb(53,50,88)] p-4\" href = \"post.php?id=$i\">";
-                for ($j = 0; $j <= sizeof($lines) - 1; $j++) {
-                    $ptext = $lines[$j];
-                    switch ($j) {
-                        case 0:
-                            echo "<h1 class = \"text-2xl\">❔ $ptext</h1>";
-                            break;
-                        case 1:
-                            echo "<p class = \"\">ถูกสร้างโดย $ptext | ";
-                            break;
-                        case 2:
-                            echo "$ptext</p>";
-                            break;
-                    }
-                }
-                echo "</a></div>";
+                $lines = file("posts/header/$i.txt");
+
+                $topicName = $lines[0];
+                $creator = $lines[1];
+                $createdDT = $lines[2];
+
+                echo "
+                    <div class = \"w-full flex flex-col\">
+                        <a class=\"border-2 border-white/40 hover:border-white/80 bg-[rgb(60,57,99)] hover:bg-[rgb(53,50,88)] p-4\" href = \"post.php?id=$i\">
+                            <h1 class = \"text-2xl\">❔ $topicName</h1>
+                            <p class = \"\">โพสต์โดย $creator | $createdDT</p>
+                        </a>
+                    </div>
+                ";
             }
             ?>
         </section>

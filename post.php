@@ -1,12 +1,16 @@
 <?php
-$filename = "posts/" . $_GET["id"] . ".txt";
-if (file_exists($filename)) {
-    $fp = fopen($filename, "r");
-    $counter = fgets($fp, 99);
-    fclose($fp);
-} else {
-    $counter = 0;
-    echo "file not foud";
+
+$postId = $_GET["id"];
+$header = file("posts/header/$postId.txt");
+$contents = file("posts/content/$postId.txt");
+
+$topicName = $header[0];
+$creator = $header[1];
+$createdDT = $header[2];
+$content = "";
+
+for ($i = 0; $i < count($contents); $i++) {
+    $content .= $contents[$i];
 }
 ?>
 
@@ -33,9 +37,7 @@ if (file_exists($filename)) {
 
     <script src="https://cdn.tailwindcss.com"></script>
     <?php
-    $lines = file("posts/" . $_GET["id"] . ".txt");
-
-    echo "<title>$lines[0]</title>";
+    echo "<title>$topicName</title>";
     ?>
 </head>
 
@@ -54,31 +56,20 @@ if (file_exists($filename)) {
         <section
             class="w-full flex items-center flex-col gap-4 bg-blue-800 p-8 border-slate-400 border-[1px] rounded-sm">
             <?php
-            $lines = file("posts/" . $_GET["id"] . ".txt");
 
-            $creator = $lines[1];
-            $createdDT = $lines[2];
-            $content = "";
-            echo "<div class = \"w-full flex flex-col p-2 \">";
-            for ($j = 0; $j <= sizeof($lines) - 1; $j++) {
-                $ptext = $lines[$j];
-                switch ($j) {
-                    case 0:
-                        echo "<div class = \"mb-8\"><h1 class = \"text-2xl text-yellow-400\"> $ptext</h1></div>";
-                        break;
-                    case 1:
-                    case 2:
-                        break;
-                    default:
-                        $content = "$content$ptext";
-                        break;
-                }
-            }
-            echo "<pre class=\"text-wrap\">$content</pre>";
-            echo "<div class = \"mt-8 flex flex-row gap-4\"><div class = \"text-4xl text-center\">😄</div>";
-            echo "<div><p class = \"\">$creator</p>";
-            echo "<p class = \"\">$createdDT</p></div>";
-            echo "</div>";
+            echo "
+                <div class = \"w-full flex flex-col p-2 \">
+                    <div class = \"mb-8\">
+                        <h1 class = \"text-2xl text-yellow-400\">$topicName</h1>
+                    </div>
+                    <pre class=\"text-wrap\">$content</pre>
+                    <div class = \"mt-8 flex flex-row gap-4\">
+                        <div class = \"text-4xl text-center\">😄</div>
+                    <div>
+                    <p class = \"\">$creator</p>
+                    <p class = \"\">$createdDT</p>
+                </div>
+            ";
             ?>
         </section>
     </main>

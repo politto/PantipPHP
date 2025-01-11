@@ -41,14 +41,19 @@ if ($topic != null || $content != null || $creator != null) {
 
 	// create new post
 	$postId = $counter;
-	$newPostFileName = "posts/{$postId}.txt";
+	$newPostFileName = "{$postId}.txt";
 	$now = date("d-M-Y H:i:s");
-	$fp = fopen($newPostFileName, "w");
-	fwrite($fp, "$topic\n");
-	fwrite($fp, "$creator\n");
-	fwrite($fp, "$now\n");
-	fwrite($fp, "$content");
-	fclose($fp);
+
+	$headerFp = fopen("posts/header/$newPostFileName", "w");
+	fwrite($headerFp, "$topic\n");
+	fwrite($headerFp, "$creator\n");
+	fwrite($headerFp, "$now\n");
+
+	$contentFp = fopen("posts/content/$newPostFileName", "w");
+	fwrite($contentFp, "$content");
+
+	fclose($headerFp);
+	fclose($contentFp);
 
 	// update counter
 	$fp = fopen($counterFileName, "w");
